@@ -324,24 +324,55 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-    /* =====================================================
-       PDF NAME
-    ===================================================== */
+   /* =====================================================
+   PDF NAME
+===================================================== */
 
-    function getPDFFileName() {
-        let name = getValue("inPdfName").trim();
+function getPDFFileName() {
+    let name = getValue("inPdfName").trim();
 
-        if (!name) {
-            const gr = getValue("inGR").trim();
-            name = gr ? `CTI Bilty ${gr}` : "CTI Bilty";
-        }
-
-        if (!name.toLowerCase().endsWith(".pdf")) {
-            name += ".pdf";
-        }
-
-        return name;
+    if (!name) {
+        const gr = getValue("inGR").trim();
+        name = gr || "Bilty";
     }
+
+    if (!name.toLowerCase().endsWith(".pdf")) {
+        name += ".pdf";
+    }
+
+    return name;
+}
+
+/* =====================================================
+   AUTO PDF NAME FROM G.R. NO.
+===================================================== */
+
+let pdfNameManuallyChanged = false;
+
+const pdfNameInput = document.getElementById("inPdfName");
+const grInput = document.getElementById("inGR");
+
+if (pdfNameInput && grInput) {
+
+    // User manually changes the PDF name
+    pdfNameInput.addEventListener("input", function () {
+        pdfNameManuallyChanged = true;
+    });
+
+    // G.R. No. changes
+    grInput.addEventListener("input", function () {
+
+        // Only auto-update if user has not manually changed the name
+        if (!pdfNameManuallyChanged) {
+            pdfNameInput.value = grInput.value.trim();
+        }
+    });
+
+    // Initial value
+    if (!pdfNameInput.value.trim() && grInput.value.trim()) {
+        pdfNameInput.value = grInput.value.trim();
+    }
+}
 
 
     /* =====================================================
