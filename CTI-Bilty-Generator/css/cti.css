@@ -1,0 +1,1714 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #eeeeee;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   INPUT PANEL
+===================================================== */
+
+.input-panel {
+    width: min(1100px, calc(100% - 30px));
+    margin: 25px auto 35px;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.10);
+}
+
+.input-panel h2 {
+    margin: 0 0 22px;
+    font-size: 25px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-section h3 {
+    margin: 0 0 11px;
+    font-size: 17px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 13px;
+}
+
+.party-input-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 13px;
+}
+
+.invoice-input-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 13px;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-box label {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.field-tools {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 24px;
+    display: none;
+}
+
+.field-tools select {
+    width: 63px;
+    height: 23px;
+    padding: 1px 3px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 11px;
+}
+
+.field-tools input[type="color"] {
+    width: 27px;
+    height: 23px;
+    padding: 1px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bold-btn {
+    width: 27px;
+    height: 23px;
+    padding: 0;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.bold-btn.active {
+    background: #000;
+    color: #fff;
+}
+
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.input-box textarea {
+    min-height: 65px;
+    resize: vertical;
+}
+
+
+/* =====================================================
+   GST + BUTTONS
+===================================================== */
+
+.gst-options {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.gst-options label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.button-row button {
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 7px;
+    background: #eeeeee;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+.preview-wrapper {
+    width: 100%;
+    padding: 0 20px 40px;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+}
+
+
+/* =====================================================
+   A4 LANDSCAPE INTERNAL PAGE
+===================================================== */
+
+.page {
+    position: relative;
+
+    width: 842px;
+    height: 595px;
+
+    min-width: 842px;
+    min-height: 595px;
+
+    background: #fff;
+
+    border: 1px solid #000;
+
+    overflow: hidden;
+
+    color: #000;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.risk-text {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 100%;
+
+    text-align: center;
+
+    color: #000 !important;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: underline;
+}
+
+
+/* CLICKABLE PHONE */
+
+.phone-text {
+    position: absolute;
+
+    top: 5px;
+    right: 8px;
+
+    text-align: right;
+
+    font-size: 10px;
+
+    line-height: 12px;
+
+    color: #000;
+}
+
+.phone-text a {
+    color: #000 !important;
+
+    text-decoration: none !important;
+
+    cursor: pointer;
+}
+
+
+/* REAL LOGO */
+
+.cti-logo {
+    position: absolute;
+
+    left: 17px;
+    top: 25px;
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.cti-logo img {
+    display: block;
+
+    width: 62px;
+    height: 62px;
+
+    object-fit: contain;
+}
+
+
+/* COMPANY HEADER */
+
+.company-name {
+    position: absolute;
+
+    top: 26px;
+    left: 75px;
+    right: 75px;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    color: #000 !important;
+
+    font-family: "Times New Roman", Times, serif;
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+.company-address {
+    position: absolute;
+
+    top: 56px;
+    left: 75px;
+    right: 75px;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    color: #000 !important;
+
+    font-size: 11px;
+}
+
+.company-email {
+    position: absolute;
+
+    top: 73px;
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #000 !important;
+
+    font-size: 11px;
+}
+
+.copy-title {
+    position: absolute;
+
+    top: 90px;
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #000 !important;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.details-row {
+    position: absolute;
+
+    top: 110px;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 40px;
+
+    display: grid;
+
+    grid-template-columns:
+        180px
+        145px
+        160px
+        105px
+        252px;
+
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+.details-row > div {
+    position: relative;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    padding-left: 6px;
+
+    border-right: 1px solid #000;
+
+    font-size: 11px;
+}
+
+.details-row > div:last-child {
+    border-right: 0;
+}
+
+.details-row span {
+    margin-right: 6px;
+}
+
+.detail-from div,
+.detail-to div,
+.detail-lorry div,
+.detail-date div {
+    flex: 1;
+
+    height: 22px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding-bottom: 2px;
+
+    margin-right: 5px;
+
+    border-bottom: 1px solid #000;
+
+    font-size: 11px;
+
+    overflow: hidden;
+}
+
+.gr-box {
+    position: absolute;
+
+    top: 4px;
+    right: 5px;
+
+    width: 105px;
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #000;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   PARTY
+   ONLY NAME + ONE ADDRESS + GST
+===================================================== */
+
+.party-section {
+    position: absolute;
+
+    top: 150px;
+    left: 0;
+
+    width: 100%;
+    height: 98px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    border-bottom: 1px solid #000;
+}
+
+.party-box {
+    position: relative;
+
+    height: 100%;
+
+    border-right: 1px solid #000;
+
+    overflow: hidden;
+}
+
+.party-box:last-child {
+    border-right: 0;
+}
+
+.party-heading {
+    position: absolute;
+
+    top: 9px;
+    left: 7px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-decoration: underline;
+}
+
+
+/* NAME */
+
+.party-name-line {
+    position: absolute;
+
+    top: 8px;
+
+    left: 90px;
+    right: 7px;
+
+    height: 21px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 0 4px 2px;
+
+    border-bottom: 1px solid #000;
+
+    font-size: 12px;
+
+    overflow: hidden;
+}
+
+
+/* ONE ADDRESS LINE ONLY */
+
+.party-address-line {
+    position: absolute;
+
+    top: 43px;
+
+    left: 7px;
+    right: 7px;
+
+    height: 22px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 0 4px 2px;
+
+    border-bottom: 1px solid #000;
+
+    font-size: 11px;
+
+    overflow: hidden;
+}
+
+
+/* GST */
+
+.party-gst {
+    position: absolute;
+
+    left: 7px;
+    right: 7px;
+    bottom: 4px;
+
+    height: 22px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 7px;
+
+    font-size: 11px;
+}
+
+.party-gst-line {
+    flex: 1;
+
+    height: 21px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 0 4px 2px;
+
+    border-bottom: 1px solid #000;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   GOODS
+===================================================== */
+
+.goods-area {
+    position: absolute;
+
+    top: 247px;
+    left: 0;
+
+    width: 100%;
+    height: 210px;
+
+    display: grid;
+
+    grid-template-columns:
+        48px
+        360px
+        88px
+        70px
+        85px
+        191px;
+
+    border-bottom: 1px solid #000;
+}
+
+.goods-package,
+.goods-nature,
+.goods-weight,
+.goods-rate,
+.goods-charges,
+.goods-freight {
+    position: relative;
+
+    height: 100%;
+
+    border-right: 1px solid #000;
+
+    overflow: hidden;
+}
+
+.goods-freight {
+    border-right: 0;
+}
+
+.goods-heading {
+    position: absolute;
+
+    top: 0;
+
+    width: 100%;
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 1px solid #000;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 12px;
+}
+
+.goods-value {
+    position: absolute;
+
+    top: 32px;
+
+    left: 0;
+
+    width: 100%;
+
+    padding: 5px;
+
+    text-align: center;
+
+    font-size: 12px;
+}
+
+.goods-nature .goods-value {
+    text-align: left;
+    padding-left: 8px;
+}
+
+
+/* =====================================================
+   ENDORSEMENT
+===================================================== */
+
+.endorsement {
+    position: absolute;
+
+    top: 76px;
+    left: 75px;
+
+    width: 215px;
+
+    transform: rotate(-31deg);
+
+    text-align: center;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    line-height: 12px;
+}
+
+.endorsement-line {
+    width: 115px;
+
+    margin: 0 auto 5px;
+
+    border-top: 1px solid #000;
+}
+
+.endorsement-line:last-child {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+
+/* =====================================================
+   LOWER GOODS BLOCKS
+===================================================== */
+
+.charge-weight {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 43px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border-top: 1px solid #000;
+
+    font-size: 10px;
+}
+
+.charge-weight strong {
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    font-weight: 400;
+}
+
+.tbb-pay {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 66px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border-top: 1px solid #000;
+
+    text-align: center;
+}
+
+.tbb-pay span {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-decoration: underline;
+
+    line-height: 14px;
+}
+
+.tbb-pay strong {
+    font-size: 11px;
+}
+
+.s-charge {
+    position: absolute;
+
+    left: 0;
+    bottom: 43px;
+
+    width: 100%;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border-top: 1px solid #000;
+
+    font-size: 11px;
+}
+
+.s-charge strong {
+    font-weight: 400;
+}
+
+.st-charge {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 8px;
+
+    border-top: 1px solid #000;
+
+    font-size: 11px;
+}
+
+.st-charge strong {
+    display: flex;
+    gap: 14px;
+    font-weight: 400;
+}
+
+
+/* =====================================================
+   FREIGHT
+===================================================== */
+
+.freight-rs {
+    position: absolute;
+
+    top: 32px;
+    left: 0;
+
+    width: 50%;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+.freight-p {
+    position: absolute;
+
+    top: 32px;
+    right: 0;
+
+    width: 50%;
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+.freight-value-rs,
+.freight-value-p {
+    position: absolute;
+
+    top: 51px;
+
+    width: 50%;
+
+    text-align: center;
+
+    font-size: 12px;
+}
+
+.freight-value-rs {
+    left: 0;
+}
+
+.freight-value-p {
+    right: 0;
+}
+
+
+/* =====================================================
+   VALUE / INVOICE / EWAY
+===================================================== */
+
+.value-invoice-eway {
+    position: absolute;
+
+    top: 457px;
+    left: 0;
+
+    width: 100%;
+    height: 34px;
+
+    display: grid;
+
+    grid-template-columns:
+        180px
+        180px
+        220px
+        262px;
+
+    border-bottom: 1px solid #000;
+}
+
+.value-cell,
+.invoice-cell,
+.eway-cell {
+    height: 100%;
+
+    padding: 7px;
+
+    border-right: 1px solid #000;
+
+    font-size: 11px;
+}
+
+.eway-cell {
+    border-right: 0;
+}
+
+.value-cell strong,
+.invoice-cell strong,
+.eway-cell strong {
+    margin-left: 10px;
+
+    font-size: 12px;
+
+    font-weight: 400;
+}
+
+
+/* =====================================================
+   NOTE
+===================================================== */
+
+.note-section {
+    position: absolute;
+
+    top: 491px;
+    left: 0;
+
+    width: 100%;
+    height: 50px;
+
+    padding: 5px 7px;
+
+    border-bottom: 1px solid #000;
+
+    font-size: 8.5px;
+
+    line-height: 10px;
+
+    overflow: hidden;
+}
+
+.note-section strong {
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.middle-footer {
+    position: absolute;
+
+    top: 541px;
+    left: 0;
+
+    width: 100%;
+    height: 30px;
+
+    border-bottom: 1px solid #000;
+}
+
+.jurisdiction {
+    position: absolute;
+
+    left: 7px;
+    top: 9px;
+
+    font-size: 9px;
+}
+
+.gst-paid {
+    position: absolute;
+
+    left: 350px;
+    top: 5px;
+
+    height: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 10px;
+}
+
+.gst-paid > strong {
+    margin-right: 3px;
+
+    font-size: 12px;
+}
+
+.gst-paid span {
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+}
+
+.gst-paid i {
+    width: 11px;
+    height: 11px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #000;
+
+    font-size: 9px;
+
+    font-style: normal;
+}
+
+.signature {
+    position: absolute;
+
+    right: 7px;
+    top: 10px;
+
+    font-size: 9px;
+}
+
+
+/* =====================================================
+   BOTTOM
+===================================================== */
+
+.bottom-section {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 24px;
+}
+
+.delivery {
+    position: absolute;
+
+    left: 7px;
+    bottom: 5px;
+
+    font-size: 11px;
+}
+
+.delivery span {
+    display: inline-block;
+
+    width: 200px;
+    height: 15px;
+
+    margin-left: 8px;
+
+    border-bottom: 1px solid #000;
+}
+
+.pan {
+    position: absolute;
+
+    left: 350px;
+    bottom: 5px;
+
+    width: 200px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.gstin {
+    position: absolute;
+
+    left: 555px;
+    bottom: 5px;
+
+    width: 250px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+    html,
+    body {
+        width: 297mm;
+        height: 210mm;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: #fff !important;
+    }
+
+    .input-panel {
+        display: none !important;
+    }
+
+    .preview-wrapper {
+        width: 297mm;
+        height: 210mm;
+
+        padding: 0;
+        margin: 0;
+
+        display: block;
+
+        overflow: hidden;
+    }
+
+    .page {
+        width: 842px;
+        height: 595px;
+
+        min-width: 842px;
+        min-height: 595px;
+
+        margin: 0;
+
+        border: 1px solid #000;
+
+        zoom: 1.3333333333;
+    }
+
+    .phone-text a {
+        color: #000 !important;
+        text-decoration: none !important;
+    }
+
+    @page {
+        size: A4 landscape;
+        margin: 0;
+    }
+}
+
+
+/* =====================================================
+   MOBILE INPUT PANEL
+===================================================== */
+
+@media screen and (max-width: 900px) {
+
+    .form-grid,
+    .party-input-grid,
+    .invoice-input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-wrapper {
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+}
+/* =====================================================
+   FINAL CTI VISUAL TUNING
+===================================================== */
+
+/* Bigger real CTI logo */
+.cti-logo {
+    left: 12px;
+    top: 20px;
+    width: 92px;
+    height: 82px;
+}
+
+.cti-logo img {
+    width: 82px;
+    height: 82px;
+    object-fit: contain;
+}
+
+/* Larger, clearer contact numbers */
+.phone-text {
+    top: 6px;
+    right: 9px;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.phone-text a {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Keep the header black */
+.risk-text,
+.company-name,
+.company-address,
+.company-email,
+.copy-title,
+.phone-text,
+.phone-text a {
+    color: #000 !important;
+}
+
+/* Slightly clearer main header */
+.company-name {
+    left: 88px;
+    right: 88px;
+    top: 27px;
+    font-size: 27px;
+}
+
+.company-address {
+    left: 88px;
+    right: 88px;
+    top: 59px;
+    font-size: 12px;
+}
+
+.company-email {
+    top: 77px;
+    font-size: 12px;
+}
+
+.copy-title {
+    top: 94px;
+    font-size: 15px;
+}
+
+/* Make party text clearer */
+.party-heading {
+    font-size: 13px;
+}
+
+.party-name-line {
+    font-size: 13px;
+}
+
+.party-address-line {
+    font-size: 12px;
+}
+
+.party-gst {
+    font-size: 12px;
+}
+
+/* More readable general bilty text */
+.details-row > div,
+.detail-from div,
+.detail-to div,
+.detail-lorry div,
+.detail-date div,
+.goods-value,
+.value-cell,
+.invoice-cell,
+.eway-cell,
+.delivery {
+    font-size: 12px;
+}
+
+/* More signature space: note becomes slightly shorter and footer taller */
+.note-section {
+    top: 491px;
+    height: 43px;
+    font-size: 8.8px;
+    line-height: 10.5px;
+}
+
+.middle-footer {
+    top: 534px;
+    height: 37px;
+}
+
+.jurisdiction {
+    top: 14px;
+    font-size: 10px;
+}
+
+.gst-paid {
+    top: 10px;
+    font-size: 10px;
+}
+
+.gst-paid > strong {
+    font-size: 12px;
+}
+
+.signature {
+    right: 7px;
+    top: 1px;
+    width: 145px;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.signature img {
+    width: 102px;
+    height: 23px;
+    object-fit: fill;
+    object-position: left;
+    display: block;
+}
+
+.signature span {
+    margin-top: 1px;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+/* Keep bottom row at the very bottom */
+.bottom-section {
+    height: 24px;
+}
+
+/* The hidden fields in the current project stay hidden.
+   This keeps Net Weight, Rate, Charges and Freight out of the input panel. */
+
+@media print {
+    .signature img {
+        display: block !important;
+    }
+}
+
+
+/* =====================================================
+   FINAL USER REQUESTED SETTINGS - 27 SEP 2026
+===================================================== */
+
+:root {
+    --company-blue: #151d76;
+    --detail-blue: #124973;
+    --date-red: #872222;
+    --value-red: #c00000;
+}
+
+/* Every normal input starts at 15px. */
+.input-box input,
+.input-box textarea {
+    font-size: 15px !important;
+}
+
+/* Main company name */
+.company-name {
+    color: var(--company-blue) !important;
+    left: 105px;
+    right: 105px;
+    top: 27px;
+    font-size: 27px;
+}
+
+/* Real logo - larger */
+.cti-logo {
+    left: 12px;
+    top: 18px;
+    width: 92px;
+    height: 88px;
+}
+
+.cti-logo img {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+}
+
+/* Contacts - larger and clearly readable */
+.phone-text,
+.phone-text a {
+    color: #000 !important;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    font-weight: 700;
+}
+
+.phone-text {
+    top: 5px;
+    right: 8px;
+}
+
+/* Required fixed colours */
+.detail-from,
+.detail-to,
+.detail-lorry,
+.detail-from > span,
+.detail-to > span,
+.detail-lorry > span,
+.detail-from > div,
+.detail-to > div,
+.detail-lorry > div,
+.invoice-cell,
+.invoice-cell span,
+.invoice-cell strong,
+.eway-cell,
+.eway-cell span,
+.eway-cell strong,
+.delivery,
+.delivery span {
+    color: var(--detail-blue) !important;
+}
+
+.detail-date,
+.detail-date > span,
+.detail-date > div,
+.detail-gr,
+.detail-gr > span,
+.gr-box,
+.goods-package,
+.goods-package .goods-heading,
+.goods-package .goods-value,
+.goods-nature,
+.goods-nature .goods-heading,
+.goods-nature .goods-value {
+    color: var(--date-red) !important;
+}
+
+.party-heading,
+.party-name-line,
+.party-address-line,
+.party-gst,
+.party-gst-line {
+    color: #000 !important;
+}
+
+.value-cell,
+.value-cell span,
+.value-cell strong {
+    color: var(--value-red) !important;
+}
+
+/* Basic detail values use 15px by default. */
+.detail-from > div,
+.detail-to > div,
+.detail-lorry > div,
+.detail-date > div {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* G.R. No. is 20px by default. */
+.gr-box {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Party text is 15px by default. */
+.party-name-line,
+.party-address-line,
+.party-gst,
+.party-gst-line {
+    font-size: 15px;
+}
+
+/* Package / Nature / Value are 18px by default. */
+.goods-package .goods-value,
+.goods-nature .goods-value {
+    font-size: 18px;
+}
+
+.value-cell strong,
+.invoice-cell strong,
+.eway-cell strong {
+    font-size: 15px;
+}
+
+.delivery span {
+    font-size: 15px;
+}
+
+/* =====================================================
+   GOODS TABLE - exact lower-block arrangement
+   ===================================================== */
+.goods-area {
+    top: 247px;
+    height: 210px;
+    grid-template-columns: 48px 360px 88px 70px 85px 191px;
+}
+
+.goods-heading {
+    height: 31px;
+    font-size: 13px;
+    line-height: 14px;
+}
+
+.goods-value {
+    top: 32px;
+}
+
+/* Net Weight: large upper block + Charge Weight lower block */
+.charge-weight {
+    bottom: 0;
+    height: 83px;
+    border-top: 1px solid #000;
+    font-size: 13px;
+}
+
+.charge-weight strong {
+    font-size: 15px;
+}
+
+/* Rate: large upper block + TBB lower block */
+.tbb-pay {
+    bottom: 0;
+    height: 83px;
+    border-top: 1px solid #000;
+}
+
+.tbb-pay span {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.tbb-pay strong {
+    font-size: 13px;
+}
+
+/* Charges: S.Charge + St.Ch. blocks */
+.s-charge {
+    bottom: 42px;
+    height: 42px;
+    font-size: 13px;
+}
+
+.s-charge strong {
+    font-size: 13px;
+}
+
+.st-charge {
+    bottom: 0;
+    height: 42px;
+    font-size: 13px;
+}
+
+.st-charge strong {
+    font-size: 13px;
+}
+
+/* Freight remains one continuous body with Rs./P. under its header. */
+.freight-rs,
+.freight-p {
+    top: 32px;
+    font-size: 13px;
+}
+
+.freight-value-rs,
+.freight-value-p {
+    top: 52px;
+    font-size: 15px;
+}
+
+/* =====================================================
+   VALUE / INVOICE / E-WAY - exactly 3 blocks
+   ===================================================== */
+.value-invoice-eway {
+    top: 457px;
+    height: 34px;
+    grid-template-columns: 220px 220px 402px;
+}
+
+.value-cell,
+.invoice-cell,
+.eway-cell {
+    font-size: 13px;
+    padding: 7px;
+}
+
+/* =====================================================
+   NOTE + FOOTER + SIGNATURE SPACE
+   ===================================================== */
+.note-section {
+    top: 491px;
+    height: 43px;
+    padding: 5px 7px;
+    font-size: 9px;
+    line-height: 10.5px;
+}
+
+.middle-footer {
+    top: 534px;
+    height: 37px;
+}
+
+.jurisdiction {
+    top: 13px;
+    font-size: 10px;
+}
+
+.gst-paid {
+    top: 9px;
+    left: 345px;
+    font-size: 11px;
+    gap: 7px;
+}
+
+.gst-paid > strong {
+    font-size: 13px;
+}
+
+.gst-paid i {
+    width: 12px;
+    height: 12px;
+    font-size: 10px;
+}
+
+.signature {
+    right: 7px;
+    top: 1px;
+    width: 150px;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.signature img {
+    width: 102px;
+    height: 23px;
+    object-fit: fill;
+    object-position: left;
+    display: block;
+}
+
+.signature span {
+    margin-top: 1px;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+/* Keep the bottom row clear and readable. */
+.bottom-section {
+    height: 24px;
+}
+
+.pan,
+.gstin {
+    font-size: 12px;
+}
+
+/* Never let user-selected output text paint outside its own cell. */
+.detail-from > div,
+.detail-to > div,
+.detail-lorry > div,
+.detail-date > div,
+.gr-box,
+.party-name-line,
+.party-address-line,
+.party-gst-line,
+.goods-value,
+.value-cell strong,
+.invoice-cell strong,
+.eway-cell strong,
+.delivery span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+}
+
+/* Print keeps the exact A4 landscape page and border. */
+@media print {
+    .page {
+        border: 1px solid #000 !important;
+    }
+
+    .signature img {
+        display: block !important;
+    }
+}
+
+
+#outWeight{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    top: 30%;
+    font-weight: bold;
+    font-size: 12px;
+}

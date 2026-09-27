@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CTI Bilty Generator</title>
+
+    <link rel="stylesheet" href="css/cti.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     INPUT PANEL
+===================================================== -->
+
+<div class="input-panel">
+
+    <h1>CTI Bilty Generator</h1>
+
+
+    <!-- BASIC DETAILS -->
+
+    <div class="form-section">
+
+        <h2>Basic Details</h2>
+
+        <div class="form-grid">
+
+            <div class="input-box" data-field="inFrom">
+                <label>From</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inFrom">
+            </div>
+
+            <div class="input-box" data-field="inTo">
+                <label>To</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inTo">
+            </div>
+
+            <div class="input-box" data-field="inLorry">
+                <label>Lorry No.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inLorry">
+            </div>
+
+            <div class="input-box" data-field="inDate">
+                <label>Date</label>
+                <div class="field-tools"></div>
+                <input type="date" id="inDate">
+            </div>
+
+            <div class="input-box" data-field="inGR">
+                <label>G.R. No.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inGR">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PARTY DETAILS -->
+
+    <div class="form-section">
+
+        <h2>Party Details</h2>
+
+        <h3>Consignor Details</h3>
+
+        <div class="party-input-grid">
+
+
+            <div class="input-box" data-field="inConsignor">
+                <label>Consignor Name</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inConsignor">
+            </div>
+
+            <div class="input-box" data-field="inConsignorAddr">
+                <label>Consignor Address</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inConsignorAddr">
+            </div>
+
+            <div class="input-box" data-field="inConsignorGST">
+                <label>Consignor GST No.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inConsignorGST">
+            </div>
+
+        </div>
+        </div>
+    
+    
+        <!-- PARTY DETAILS -->
+
+    <div class="form-section">
+
+        <h3>Consignee Details</h3>
+        
+        <div class="party-input-grid">
+
+            <div class="input-box" data-field="inConsignee">
+                <label>Consignee Name</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inConsignee">
+            </div>
+
+            <div class="input-box" data-field="inConsigneeAddr">
+                <label>Consignee Address</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inConsigneeAddr">
+            </div>
+
+            <div class="input-box" data-field="inConsigneeGST">
+                <label>Consignee GST No.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inConsigneeGST">
+            </div>
+
+        </div>
+        </div>
+
+
+    <!-- GOODS -->
+
+    <div class="form-section">
+
+        <h2>Goods Details</h2>
+
+        <div class="form-grid">
+
+            <div class="input-box" data-field="inPkg">
+                <label>No. of Packages</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inPkg">
+            </div>
+
+            <div class="input-box" data-field="inNature">
+                <label>Nature of Goods</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inNature">
+            </div>
+
+            <!-- <div class="input-box" data-field="inWeight">
+                <label>Net Weight</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inWeight">
+            </div>
+
+            <div class="input-box" data-field="inRate">
+                <label>Rate</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inRate">
+            </div>
+
+            <div class="input-box" data-field="inCharges">
+                <label>Charges</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inCharges">
+            </div>
+
+            <div class="input-box" data-field="inFreightRs">
+                <label>Freight Rs.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inFreightRs">
+            </div>
+
+            <div class="input-box" data-field="inFreightP">
+                <label>Freight P.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inFreightP">
+            </div> -->
+
+        </div>
+
+    </div>
+
+
+    <!-- CHARGES -->
+
+    <div class="form-section">
+
+        <h2>Charges</h2>
+
+        <div class="form-grid">
+
+            <div class="input-box" data-field="inChargeWeight">
+                <label>Charge Weight</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inChargeWeight">
+            </div>
+
+            <!-- <div class="input-box" data-field="inTbb">
+                <label>TBB AT TO PAY</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inTbb">
+            </div>
+
+            <div class="input-box" data-field="inSCharge">
+                <label>S. Charge</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inSCharge">
+            </div>
+
+            <div class="input-box" data-field="inStChargeRs">
+                <label>St. Ch. Rs.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inStChargeRs">
+            </div>
+
+            <div class="input-box" data-field="inStChargeP">
+                <label>St. Ch. P.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inStChargeP">
+            </div> -->
+
+        </div>
+
+    </div>
+
+
+    <!-- BILLING -->
+
+    <div class="form-section">
+
+        <h2>Billing Details</h2>
+
+        <div class="invoice-input-grid">
+
+            <div class="input-box" data-field="inValue">
+                <label>Value Rs.</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inValue">
+            </div>
+
+            <div class="input-box" data-field="inInvoice">
+                <label>Invoice</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inInvoice">
+            </div>
+
+            <div class="input-box" data-field="inEway">
+                <label>E-Way Bill</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inEway">
+            </div>
+
+            <div class="input-box" data-field="inDeliveryAt">
+                <label>Delivery At</label>
+                <div class="field-tools"></div>
+                <input type="text" id="inDeliveryAt">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- GST -->
+
+    <div class="form-section">
+
+        <h2>GST Paid By</h2>
+
+        <div class="gst-options">
+
+            <label>
+                <input type="checkbox" id="gstConsignor">
+                CONSIGNOR
+            </label>
+
+            <label>
+                <input type="checkbox" id="gstConsignee">
+                CONSIGNEE
+            </label>
+
+            <label>
+                <input type="checkbox" id="gstTransporter">
+                TRANSPORTER
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- PDF NAME -->
+
+    <div class="form-section">
+
+        <div class="input-box">
+
+            <label>PDF File Name</label>
+
+            <input
+                type="text"
+                id="inPdfName"
+                value="CTI Bilty"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="button-row">
+
+        <button type="button" id="btnGenerate">
+            Generate PDF
+        </button>
+
+        <button type="button" id="btnPrint">
+            Print
+        </button>
+
+        <button type="button" id="btnShare">
+            Share
+        </button>
+
+        <button type="button" id="btnReset">
+            Reset
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     BILTY
+===================================================== -->
+
+<div class="preview-wrapper">
+
+<div class="page" id="biltyPage">
+
+
+    <!-- HEADER -->
+
+    <div class="risk-text">
+        AT OWNER'S RISK
+    </div>
+
+
+    <!-- CLICKABLE PHONE NUMBERS -->
+
+    <div class="phone-text">
+
+        <a href="tel:+919370027198">
+            M. 9370027198
+        </a>
+
+        /
+
+        <a href="tel:+919145607198">
+            9145607198
+        </a>
+
+        <br>
+
+        <a href="tel:07768020648">
+            07768020648
+        </a>
+
+    </div>
+
+
+    <!-- REAL CTI LOGO -->
+
+    <div class="cti-logo">
+
+        <img
+            src="assets/cti-logo-transparent.png"
+            alt="CTI Logo"
+        >
+
+    </div>
+
+
+    <div class="company-name">
+        COMMERCIAL TRANSPORT OF INDIA
+    </div>
+
+
+    <div class="company-address">
+        CTI House, Plot No. 13, Near Glaxo Godown,
+        Khadgaon Road, Sonba Nagar, Nagpur-23.
+    </div>
+
+
+    <div class="company-email">
+        E-mail : ngpcti@gmail.com
+    </div>
+
+
+    <div class="copy-title">
+        CONSIGNEE COPY
+    </div>
+
+
+
+    <!-- DETAILS -->
+
+    <div class="details-row">
+
+        <div class="detail-from">
+
+            <span>From</span>
+
+            <div id="outFrom"></div>
+
+        </div>
+
+
+        <div class="detail-to">
+
+            <span>To</span>
+
+            <div id="outTo"></div>
+
+        </div>
+
+
+        <div class="detail-lorry">
+
+            <span>Lorry No.</span>
+
+            <div id="outLorry"></div>
+
+        </div>
+
+
+        <div class="detail-date">
+
+            <span>Date</span>
+
+            <div id="outDate"></div>
+
+        </div>
+
+
+        <div class="detail-gr">
+
+            <span>G.R. No.</span>
+
+            <div class="gr-box" id="outGR"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PARTY -->
+
+    <div class="party-section">
+
+
+        <div class="party-box">
+
+            <div class="party-heading">
+                Consignor
+            </div>
+
+
+            <div
+                class="party-name-line"
+                id="outConsignor">
+            </div>
+
+
+            <div
+                class="party-address-line"
+                id="outConsignorAddr">
+            </div>
+
+
+            <div class="party-gst">
+
+                <span>GST No.</span>
+
+                <div
+                    class="party-gst-line"
+                    id="outConsignorGST">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="party-box">
+
+            <div class="party-heading">
+                Consignee
+            </div>
+
+
+            <div
+                class="party-name-line"
+                id="outConsignee">
+            </div>
+
+
+            <div
+                class="party-address-line"
+                id="outConsigneeAddr">
+            </div>
+
+
+            <div class="party-gst">
+
+                <span>GST No.</span>
+
+                <div
+                    class="party-gst-line"
+                    id="outConsigneeGST">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- GOODS -->
+
+    <div class="goods-area">
+
+
+        <div class="goods-package">
+
+            <div class="goods-heading">
+                No. OF<br>
+                PKGS.
+            </div>
+
+            <div
+                class="goods-value"
+                id="outPkg">
+            </div>
+
+        </div>
+
+
+
+        <div class="goods-nature">
+
+            <div class="goods-heading">
+                Nature of Goods (Said to Contain)
+            </div>
+
+            <div
+                class="goods-value"
+                id="outNature">
+            </div>
+
+
+            <div class="endorsement">
+<br>
+                <div class="endorsement-line"></div>
+
+                <div>
+                    Endorsement<br>
+                    It is intended to use the CONSIGNEE<br>
+                    COPY of this set for the purpose of<br>
+                    borrowing from the Consignee Bank
+                </div>
+
+                <div class="endorsement-line"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="goods-weight">
+
+            <div class="goods-heading">
+                Net<br>
+                WEIGHT
+            </div>
+
+            <div
+                class="goods-value"
+                id="outWeight"> Fixed
+            </div>
+
+
+            <div class="charge-weight">
+
+                <span>
+                    Charge Weight
+                </span>
+
+                <strong id="outChargeWeight"></strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="goods-rate">
+
+            <div class="goods-heading">
+                Rate
+            </div>
+
+            <div
+                class="goods-value"
+                id="outRate">
+            </div>
+
+
+            <div class="tbb-pay">
+
+                <span>
+                    TBB AT<br>
+                    TO PAY
+                </span>
+
+                <strong id="outTbb"></strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="goods-charges">
+
+            <div class="goods-heading">
+                Charges
+            </div>
+
+            <div
+                class="goods-value"
+                id="outCharges">
+            </div>
+
+
+            <div class="s-charge">
+
+                <span>S. Charge</span>
+
+                <strong id="outSCharge"></strong>
+
+            </div>
+
+
+            <div class="st-charge">
+
+                <span>St. Ch.</span>
+
+                <strong>
+
+                    <span id="outStChargeRs"></span>
+
+                    <span id="outStChargeP"></span>
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="goods-freight">
+
+            <div class="goods-heading">
+                Freight Amount
+            </div>
+
+            <div class="freight-rs">
+                Rs.
+            </div>
+
+            <div class="freight-p">
+                P.
+            </div>
+
+            <div
+                class="freight-value-rs"
+                id="outFreightRs">
+            </div>
+
+            <div
+                class="freight-value-p"
+                id="outFreightP">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- VALUE / INVOICE / E-WAY -->
+
+    <div class="value-invoice-eway">
+
+        <div class="value-cell">
+
+            <span>Value Rs.</span>
+
+            <strong id="outValue"></strong>
+
+        </div>
+
+
+        <div class="invoice-cell">
+
+            <span>Invoice</span>
+
+            <strong id="outInvoice"></strong>
+
+        </div>
+
+
+        <div class="eway-cell">
+
+            <span>E-Way Bill</span>
+
+            <strong id="outEway"></strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- NOTE -->
+
+    <div class="note-section">
+
+        <strong>NOTE :-</strong>
+
+        The Consignments covered by this set of Special Lorry Receipt
+        From shall be stored at the destination under the control of
+        the transport Operator and shall be delivered to or to the
+        order of the Consignee whose name is mentioned in the Lorry
+        Report it will under the on circumstances be delivered to any
+        one without the written authority from the consignee of its
+        order endorsed on the consignee copy or on a separate Letter
+        of Authority.
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="middle-footer">
+
+
+        <div class="jurisdiction">
+            All Disputes Subject to Nagpur Jurisdiction
+        </div>
+
+
+        <div class="gst-paid">
+
+            <strong>
+                GST PAID BY
+            </strong>
+
+
+            <span>
+                CONSIGNOR
+                <i id="outGstConsignor"></i>
+            </span>
+
+
+            <span>
+                CONSIGNEE
+                <i id="outGstConsignee"></i>
+            </span>
+
+
+            <span>
+                TRANSPORTER
+                <i id="outGstTransporter"></i>
+            </span>
+
+        </div>
+
+
+        <div class="signature">
+            <img src="assets/signature-dark.png" alt="Signature">
+            <span>Signature of Booking Incharge</span>
+        </div>
+
+    </div>
+
+
+
+    <!-- BOTTOM -->
+
+    <div class="bottom-section">
+
+
+        <div class="delivery">
+
+            DELIVERY AT
+
+            <span id="outDeliveryAt"></span>
+
+        </div>
+
+
+        <div class="pan">
+            PAN No. AMKPB 1335 K
+        </div>
+
+
+        <div class="gstin">
+            GSTIN - 27AMKPB1335K1Z6
+        </div>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+<script src="js/cti.js"></script>
+
+</body>
+
+</html>
