@@ -622,135 +622,51 @@ function updateAutoPdfName() {
 ===================================================== */
 
 function saveToSheets(action) {
-
     try {
-
-        if (!GOOGLE_SHEETS_URL) {
-            return;
-        }
-
-
-        const get = id => {
-
-            const el =
-                document.getElementById(id);
-
-            return el
-                ? el.value.trim()
-                : "";
-
-        };
-
-
         const rows = readRows();
-
-
-        /*
-           UNIQUE REQUEST ID
-
-           This prevents accidental duplicate
-           requests from being treated as the
-           same save.
-        */
 
         const requestId =
             action +
             "-" +
             Date.now() +
             "-" +
-            Math.random()
-                .toString(36)
-                .substring(2, 10);
-
+            Math.random().toString(36).substring(2, 10);
 
         const data = {
+            requestId: requestId,
 
-            billNo:
-                get("inBillNo"),
+            billNo: $("billNo")?.value?.trim() || "",
+            date: $("billDate")?.value?.trim() || "",
+            party: $("party")?.value?.trim() || "",
+            address: $("address")?.value?.trim() || "",
+            pdfName: getPDFName(),
 
-            date:
-                get("inBillDate"),
+            rows: rows,
 
-            party:
-                get("inParty"),
+            enclosed: $("enclosed")?.value?.trim() || "",
+            checkedBy: $("checkedBy")?.value?.trim() || "",
 
-            address:
-                get("inPartyAddress"),
-
-            pdfName:
-                getPDFName(),
-
-            enclosed:
-                get("inEnclosed"),
-
-            checkedBy:
-                get("inCheckedBy"),
-
-            action:
-                action,
-
-            requestId:
-                requestId,
-
-            rows:
-                rows
-
+            action: action
         };
-
 
         const url =
             GOOGLE_SHEETS_URL +
             "?data=" +
-            encodeURIComponent(
-                JSON.stringify(data)
-            );
-
+            encodeURIComponent(JSON.stringify(data));
 
         /*
-           Hidden iframe.
-           Does not block PDF / Print / Share.
-        */
-
-        const iframe =
-            document.createElement("iframe");
-
-
-        iframe.style.display = "none";
-
-        iframe.style.width = "0";
-
-        iframe.style.height = "0";
-
-        iframe.style.border = "0";
-
-        iframe.src = url;
-
-
-        document.body.appendChild(
-            iframe
-        );
-
-
-        /*
-           Remove iframe quickly.
-        */
-
-        setTimeout(() => {
-
-            if (iframe.parentNode) {
-                iframe.remove();
-            }
-
-        }, 1500);
-
+         * Fire-and-forget request.
+         * It does not wait for Google Sheets and does not
+         * show any saving/error message to the user.
+         */
+        fetch(url, {
+            method: "GET",
+            mode: "no-cors",
+            keepalive: true
+        }).catch(() => {});
 
     } catch (_) {
-
-        /*
-           Completely silent.
-        */
-
-        return;
+        // Completely silent.
     }
 }
 
@@ -884,59 +800,24 @@ async function makePDF() {
 ===================================================== */
 
 async function generatePDF() {
+    const button = $("btnGenerate");
 
-    const button =
-        $("btnGenerate");
-
-
-    if (button.disabled) {
-        return;
-    }
-
+    if (button.disabled) return;
 
     button.disabled = true;
 
-
     try {
-
-        /*
-           Start Google Sheet save
-           without waiting for it.
-        */
-
         saveToSheets("PDF");
 
+        const pdf = await makePDF();
 
-        /*
-           Immediately create PDF.
-        */
-
-        const pdf =
-            await makePDF();
-
-
-        /*
-           Immediately download.
-        */
-
-        pdf.save(
-            getPDFName()
-        );
-
+        pdf.save(getPDFName());
 
     } catch (_) {
-
-        /*
-           No error message.
-        */
-
         return;
 
-
     } finally {
-
         button.disabled = false;
-
     }
 }
 
@@ -946,117 +827,60 @@ async function generatePDF() {
 ===================================================== */
 
 async function sharePDF() {
+    const button = $("btnShare");
 
-    const button =
-        $("btnShare");
-
-
-    if (button.disabled) {
-        return;
-    }
-
+    if (button.disabled) return;
 
     button.disabled = true;
 
-
     try {
-
         /*
-           Save silently.
-        */
-
+         * Save to Google Sheets immediately when Share is clicked.
+         * This runs independently and does not wait for Sheets.
+         */
         saveToSheets("SHARE");
 
+        const pdf = await makePDF();
 
-        /*
-           Create PDF.
-        */
-
-        const pdf =
-            await makePDF();
-
-
-        /*
-           Convert to actual PDF file.
-        */
-
-        const file =
-            new File(
-
-                [
-                    pdf.output("blob")
-                ],
-
-                getPDFName(),
-
-                {
-                    type:
-                        "application/pdf"
-                }
-
-            );
-
-
-        /*
-           Native share sheet.
-        */
+        const file = new File(
+            [pdf.output("blob")],
+            getPDFName(),
+            {
+                type: "application/pdf"
+            }
+        );
 
         if (
-
             navigator.share &&
-
             navigator.canShare &&
-
             navigator.canShare({
                 files: [file]
             })
-
         ) {
-
             await navigator.share({
-
-                title:
-                    getPDFName()
-                        .replace(
-                            /\.pdf$/i,
-                            ""
-                        ),
-
-                files:
-                    [file]
-
+                title: getPDFName().replace(/\.pdf$/i, ""),
+                files: [file]
             });
-
-
         } else {
-
-            /*
-               Fallback:
-               download PDF.
-            */
-
-            pdf.save(
-                getPDFName()
-            );
-
+            pdf.save(getPDFName());
         }
 
-
-    } catch (_) {
+    } catch (error) {
+        /*
+         * If the user closes the native share popup,
+         * do nothing.
+         */
+        if (error?.name === "AbortError") {
+            return;
+        }
 
         /*
-           User cancelled share
-           or any other error.
-           Stay completely silent.
-        */
-
+         * Keep all errors silent.
+         */
         return;
 
-
     } finally {
-
         button.disabled = false;
-
     }
 }
 
@@ -1067,51 +891,45 @@ async function sharePDF() {
 
 function setupEvents() {
 
+    const bindEvent = (id, event, handler) => {
+        const element = $(id);
+
+        if (!element) {
+            return;
+        }
+
+        element.addEventListener(event, handler);
+    };
+
 
     /*
-       MAIN BILL FIELDS
+       MAIN BILL INPUTS
     */
 
     [
-
         "inParty",
         "inPartyAddress",
         "inBillNo",
         "inBillDate",
         "inEnclosed",
         "inCheckedBy"
-
     ].forEach(id => {
 
-        const el = $(id);
+        const element = $(id);
 
-        if (!el) {
+        if (!element) {
             return;
         }
 
+        element.addEventListener("input", () => {
+            updateAutoPdfName();
+            updatePreview();
+        });
 
-        el.addEventListener(
-            "input",
-            () => {
-
-                updateAutoPdfName();
-
-                updatePreview();
-
-            }
-        );
-
-
-        el.addEventListener(
-            "change",
-            () => {
-
-                updateAutoPdfName();
-
-                updatePreview();
-
-            }
-        );
+        element.addEventListener("change", () => {
+            updateAutoPdfName();
+            updatePreview();
+        });
 
     });
 
@@ -1120,21 +938,13 @@ function setupEvents() {
        MANUAL PDF NAME
     */
 
-    const pdf =
-        $("inPdfName");
+    const pdfName = $("inPdfName");
 
+    if (pdfName) {
 
-    if (pdf) {
-
-        pdf.addEventListener(
-            "input",
-            () => {
-
-                pdfNameManuallyChanged =
-                    true;
-
-            }
-        );
+        pdfName.addEventListener("input", () => {
+            pdfNameManuallyChanged = true;
+        });
 
     }
 
@@ -1143,261 +953,227 @@ function setupEvents() {
        ENTRY INPUTS
     */
 
-    $("entryInputBody")
-        .addEventListener(
-            "input",
-            e => {
+    bindEvent(
+        "entryInputBody",
+        "input",
+        e => {
 
-                if (
-                    e.target.matches("input")
-                ) {
-
-                    updatePreview();
-
-                }
-
+            if (e.target.matches("input")) {
+                updatePreview();
             }
-        );
+
+        }
+    );
 
 
-    $("entryInputBody")
-        .addEventListener(
-            "change",
-            e => {
+    bindEvent(
+        "entryInputBody",
+        "change",
+        e => {
 
-                if (
-                    e.target.matches("input")
-                ) {
-
-                    updatePreview();
-
-                }
-
+            if (e.target.matches("input")) {
+                updatePreview();
             }
-        );
+
+        }
+    );
 
 
     /*
        ENTRY COUNT
 
-       IMPORTANT:
-       NO GOOGLE SHEETS SAVE HERE.
+       NO GOOGLE SHEETS SAVE
     */
 
-    $("rowCount")
-        .addEventListener(
-            "change",
-            () => {
+    bindEvent(
+        "rowCount",
+        "change",
+        () => {
 
-                const rows =
-                    readRows();
+            const rows = readRows();
 
+            const rowCount = $("rowCount");
 
-                buildInputRows(
-                    $("rowCount").value,
-                    rows
-                );
-
-
-                updatePreview();
-
+            if (!rowCount) {
+                return;
             }
-        );
+
+            buildInputRows(
+                rowCount.value,
+                rows
+            );
+
+            updatePreview();
+
+        }
+    );
 
 
     /*
        ADD ENTRY
 
-       NO GOOGLE SHEETS SAVE.
+       NO GOOGLE SHEETS SAVE
     */
 
-    $("btnAddRow")
-        .addEventListener(
-            "click",
-            () => {
+    bindEvent(
+        "btnAddRow",
+        "click",
+        () => {
 
-                if (
-                    currentEntryCount >=
-                    MAX_ENTRIES
-                ) {
-
-                    return;
-
-                }
-
-
-                const rows =
-                    readRows();
-
-
-                currentEntryCount++;
-
-
-                $("rowCount").value =
-                    String(
-                        currentEntryCount
-                    );
-
-
-                buildInputRows(
-                    currentEntryCount,
-                    rows
-                );
-
-
-                updatePreview();
-
+            if (currentEntryCount >= MAX_ENTRIES) {
+                return;
             }
-        );
+
+            const rows = readRows();
+
+            currentEntryCount++;
+
+            const rowCount = $("rowCount");
+
+            if (rowCount) {
+                rowCount.value =
+                    String(currentEntryCount);
+            }
+
+            buildInputRows(
+                currentEntryCount,
+                rows
+            );
+
+            updatePreview();
+
+        }
+    );
 
 
     /*
        REMOVE ENTRY
 
-       NO GOOGLE SHEETS SAVE.
+       NO GOOGLE SHEETS SAVE
     */
 
-    $("btnRemoveRow")
-        .addEventListener(
-            "click",
-            () => {
+    bindEvent(
+        "btnRemoveRow",
+        "click",
+        () => {
 
-                if (
-                    currentEntryCount <=
-                    MIN_ENTRIES
-                ) {
+            if (currentEntryCount <= MIN_ENTRIES) {
+                return;
+            }
 
-                    return;
-
-                }
-
-
-                const rows =
-                    readRows()
-                        .slice(
-                            0,
-                            currentEntryCount - 1
-                        );
-
-
-                currentEntryCount--;
-
-
-                $("rowCount").value =
-                    String(
-                        currentEntryCount
-                    );
-
-
-                buildInputRows(
-                    currentEntryCount,
-                    rows
+            const rows =
+                readRows().slice(
+                    0,
+                    currentEntryCount - 1
                 );
 
+            currentEntryCount--;
 
-                updatePreview();
+            const rowCount = $("rowCount");
 
+            if (rowCount) {
+                rowCount.value =
+                    String(currentEntryCount);
             }
-        );
+
+            buildInputRows(
+                currentEntryCount,
+                rows
+            );
+
+            updatePreview();
+
+        }
+    );
 
 
     /*
        RESET
 
-       NO GOOGLE SHEETS SAVE.
+       NO GOOGLE SHEETS SAVE
     */
 
-    $("btnReset")
-        .addEventListener(
-            "click",
-            () => {
+    bindEvent(
+        "btnReset",
+        "click",
+        () => {
 
+            [
+                "inParty",
+                "inPartyAddress",
+                "inBillNo",
+                "inBillDate",
+                "inPdfName",
+                "inEnclosed",
+                "inCheckedBy"
+            ].forEach(id => {
 
-                [
+                const element = $(id);
 
-                    "inParty",
-                    "inPartyAddress",
-                    "inBillNo",
-                    "inBillDate",
-                    "inPdfName",
-                    "inEnclosed",
-                    "inCheckedBy"
+                if (element) {
+                    element.value = "";
+                }
 
-                ].forEach(id => {
+            });
 
-                    const el = $(id);
+            pdfNameManuallyChanged = false;
 
-                    if (el) {
-                        el.value = "";
-                    }
+            currentEntryCount = 1;
 
-                });
+            const rowCount = $("rowCount");
 
-
-                pdfNameManuallyChanged =
-                    false;
-
-
-                currentEntryCount =
-                    1;
-
-
-                $("rowCount").value =
-                    "1";
-
-
-                buildInputRows(
-                    1,
-                    []
-                );
-
-
-                updatePreview();
-
+            if (rowCount) {
+                rowCount.value = "1";
             }
-        );
+
+            buildInputRows(
+                1,
+                []
+            );
+
+            updatePreview();
+
+        }
+    );
 
 
     /*
-       GENERATE
+       GENERATE PDF
     */
 
-    $("btnGenerate")
-        .addEventListener(
-            "click",
-            generatePDF
-        );
+    bindEvent(
+        "btnGenerate",
+        "click",
+        generatePDF
+    );
 
 
     /*
        PRINT
-
-       Save starts in background,
-       print starts immediately.
     */
 
-    $("btnPrint")
-        .addEventListener(
-            "click",
-            () => {
+    bindEvent(
+        "btnPrint",
+        "click",
+        () => {
 
-                saveToSheets("PRINT");
+            saveToSheets("PRINT");
 
-                window.print();
+            window.print();
 
-            }
-        );
+        }
+    );
 
 
     /*
        SHARE
     */
 
-    $("btnShare")
-        .addEventListener(
-            "click",
-            sharePDF
-        );
+    bindEvent(
+        "btnShare",
+        "click",
+        sharePDF
+    );
 
 }
 

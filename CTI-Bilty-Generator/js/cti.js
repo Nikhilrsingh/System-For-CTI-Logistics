@@ -8,53 +8,99 @@ const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxIiUSjmyB8af
    SAVE BILTY DATA TO GOOGLE SHEETS
 ===================================================== */
 
-/* =====================================================
-   SAVE BILTY DATA TO GOOGLE SHEETS
-===================================================== */
+let lastBiltySheetSaveKey = "";
+let lastBiltySheetSaveTime = 0;
 
 function saveBiltyToGoogleSheets(action) {
 
-    if (!GOOGLE_SHEETS_URL) return;
+    try {
 
-    const getFieldValue = (id) => {
-        const element = document.getElementById(id);
-        return element ? element.value.trim() : "";
-    };
+        if (!GOOGLE_SHEETS_URL) {
+            return;
+        }
 
-    const data = {
-        grNo: getFieldValue("inGR"),
-        date: getFieldValue("inDate"),
-        from: getFieldValue("inFrom"),
-        to: getFieldValue("inTo"),
-        lorry: getFieldValue("inLorry"),
-        consignor: getFieldValue("inConsignor"),
-        consignee: getFieldValue("inConsignee"),
-        packages: getFieldValue("inPkg"),
-        nature: getFieldValue("inNature"),
-        value: getFieldValue("inValue"),
-        invoice: getFieldValue("inInvoice"),
-        eway: getFieldValue("inEway"),
-        deliveryAt: getFieldValue("inDeliveryAt"),
-        pdfName: getFieldValue("inPdfName"),
-        action: action
-    };
+        const getFieldValue = (id) => {
 
-    const url =
-        GOOGLE_SHEETS_URL +
-        "?data=" +
-        encodeURIComponent(JSON.stringify(data));
+            const element =
+                document.getElementById(id);
 
-    const iframe = document.createElement("iframe");
+            return element
+                ? element.value.trim()
+                : "";
 
-    iframe.style.display = "none";
+        };
 
-    iframe.src = url;
 
-    document.body.appendChild(iframe);
+        const data = {
 
-    setTimeout(() => {
-        iframe.remove();
-    }, 3000);
+            grNo: getFieldValue("inGR"),
+            date: getFieldValue("inDate"),
+            from: getFieldValue("inFrom"),
+            to: getFieldValue("inTo"),
+            lorry: getFieldValue("inLorry"),
+            consignor: getFieldValue("inConsignor"),
+            consignee: getFieldValue("inConsignee"),
+            packages: getFieldValue("inPkg"),
+            nature: getFieldValue("inNature"),
+            value: getFieldValue("inValue"),
+            invoice: getFieldValue("inInvoice"),
+            eway: getFieldValue("inEway"),
+            deliveryAt: getFieldValue("inDeliveryAt"),
+            pdfName: getFieldValue("inPdfName"),
+            action: action
+
+        };
+
+
+        /*
+         * Prevent the exact same save from being sent twice
+         * within a short period.
+         */
+        const saveKey =
+            action +
+            "|" +
+            JSON.stringify(data);
+
+        const now = Date.now();
+
+        if (
+            saveKey === lastBiltySheetSaveKey &&
+            now - lastBiltySheetSaveTime < 3000
+        ) {
+            return;
+        }
+
+        lastBiltySheetSaveKey = saveKey;
+        lastBiltySheetSaveTime = now;
+
+
+        const url =
+            GOOGLE_SHEETS_URL +
+            "?data=" +
+            encodeURIComponent(
+                JSON.stringify(data)
+            );
+
+
+        /*
+         * Fire-and-forget request.
+         * Do not wait for Google Sheets.
+         * Do not show any message.
+         */
+
+        fetch(url, {
+            method: "GET",
+            mode: "no-cors",
+            keepalive: true
+        }).catch(() => {});
+
+
+    } catch (_) {
+
+        // Completely silent.
+
+    }
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -483,121 +529,178 @@ if (pdfNameInput && grInput) {
    GENERATE PDF
 ===================================================== */
 
-$("btnGenerate").addEventListener("click", async () => {
+const btnGenerate = $("btnGenerate");
 
-    const button = $("btnGenerate");
+if (btnGenerate) {
 
-    try {
+    btnGenerate.addEventListener("click", async () => {
 
-        button.disabled = true;
-        button.textContent = "Generating...";
-
-        const pdf = await createPDF();
-
-        pdf.save(getPDFFileName());
-
-        try {
-            saveBiltyToGoogleSheets("PDF");
-        } catch (error) {
-            console.error("Google Sheets save failed:", error);
+        if (btnGenerate.disabled) {
+            return;
         }
 
-    } catch (error) {
+        btnGenerate.disabled = true;
 
-        console.error(error);
-        alert("Unable to generate PDF.");
+        try {
 
-    } finally {
+            /*
+             * Save ONCE.
+             */
+            saveBiltyToGoogleSheets("PDF");
 
-        button.disabled = false;
-        button.textContent = "Generate PDF";
+            const pdf =
+                await createPDF();
 
-    }
+            pdf.save(
+                getPDFFileName()
+            );
 
-});
+        } catch (_) {
+
+            return;
+
+        } finally {
+
+            btnGenerate.disabled = false;
+
+        }
+
+    });
+
+}
 
 
 /* =====================================================
    PRINT
 ===================================================== */
 
-$("btnPrint").addEventListener("click", () => {
+const btnPrint = $("btnPrint");
 
-    try {
+if (btnPrint) {
+
+    btnPrint.addEventListener("click", () => {
+
+        /*
+         * Save ONCE.
+         */
         saveBiltyToGoogleSheets("PRINT");
-    } catch (error) {
-        console.error("Google Sheets save failed:", error);
-    }
 
-    window.print();
+        window.print();
 
-});
+    });
+
+}
 
 
 /* =====================================================
    SHARE
 ===================================================== */
 
-$("btnShare").addEventListener("click", async () => {
+const btnShare = $("btnShare");
 
-    const button = $("btnShare");
+if (btnShare) {
 
-    try {
+    btnShare.addEventListener("click", async () => {
 
-        button.disabled = true;
-        button.textContent = "Preparing...";
+        if (btnShare.disabled) {
+            return;
+        }
 
-        const pdf = await createPDF();
-        const blob = pdf.output("blob");
-
-        const file = new File(
-            [blob],
-            getPDFFileName(),
-            { type: "application/pdf" }
-        );
+        btnShare.disabled = true;
 
         try {
+
+            /*
+             * Save ONCE.
+             */
             saveBiltyToGoogleSheets("SHARE");
+
+
+            /*
+             * Create PDF.
+             */
+            const pdf =
+                await createPDF();
+
+
+            const blob =
+                pdf.output("blob");
+
+
+            const file =
+                new File(
+                    [blob],
+                    getPDFFileName(),
+                    {
+                        type: "application/pdf"
+                    }
+                );
+
+
+            /*
+             * Native Share is available only
+             * on browsers/devices that support it.
+             */
+
+            if (
+                typeof navigator.share === "function" &&
+                typeof navigator.canShare === "function" &&
+                navigator.canShare({
+                    files: [file]
+                })
+            ) {
+
+                await navigator.share({
+
+                    title:
+                        getPDFFileName()
+                            .replace(
+                                /\.pdf$/i,
+                                ""
+                            ),
+
+                    files: [file]
+
+                });
+
+            } else {
+
+                /*
+                 * Desktop Chrome / unsupported browser.
+                 * Download instead.
+                 */
+                pdf.save(
+                    getPDFFileName()
+                );
+
+            }
+
         } catch (error) {
-            console.error("Google Sheets save failed:", error);
-        }
 
-        if (
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({ files: [file] })
-        ) {
+            /*
+             * User cancelled native Share.
+             */
+            if (
+                error &&
+                error.name === "AbortError"
+            ) {
+                return;
+            }
 
-            await navigator.share({
-                title: getPDFFileName().replace(/\.pdf$/i, ""),
-                files: [file]
-            });
+            /*
+             * Keep all other errors silent.
+             */
+            return;
 
-        } else {
+        } finally {
 
-            pdf.save(getPDFFileName());
-
-            alert(
-                "Sharing is not supported by this browser. PDF downloaded instead."
-            );
+            btnShare.disabled = false;
 
         }
 
-    } catch (error) {
+    });
 
-        if (error.name !== "AbortError") {
-            console.error(error);
-            alert("Unable to share the bilty.");
-        }
-
-    } finally {
-
-        button.disabled = false;
-        button.textContent = "Share";
-
-    }
-
-});
+}
 
 
     /* =====================================================
