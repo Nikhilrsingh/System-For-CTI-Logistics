@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setText("outConsigneeGST", getValue("inConsigneeGST"));
 
         setText("outPkg", getValue("inPkg"));
-        setText("outNature", getValue("inNature"));
+document.getElementById("outNature").innerHTML = getValue("inNature").replaceAll("\n", "<br>");
 
         setText("outChargeWeight", getValue("inChargeWeight"));
         setText("outTbb", getValue("inTbb"));
