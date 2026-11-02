@@ -138,6 +138,18 @@ body {
     resize: vertical;
 }
 
+/* Bilty me enter dikhane ke liye */
+[id^="out"], [class^="out"], .bilty-text {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+}
+
+/* Textarea ko thoda bada karne ke liye */
+#inNature {
+  height: 80px;
+  resize: vertical;
+}
+
 
 /* =====================================================
    GST + BUTTONS
@@ -686,8 +698,8 @@ body {
 .endorsement {
     position: absolute;
 
-    top: 76px;
-    left: 75px;
+    top: 90px;
+    left: 150px;
 
     width: 215px;
 
