@@ -1204,6 +1204,12 @@ body {
         overflow-x: auto;
     }
 
+    /* Bilty me enter dikhane ke liye */
+[id^="out"], [class^="out"], .bilty-text {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+}
+
 }
 /* =====================================================
    FINAL CTI VISUAL TUNING
