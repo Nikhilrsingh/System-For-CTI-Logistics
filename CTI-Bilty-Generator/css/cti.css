@@ -384,12 +384,7 @@ body {
 
     display: grid;
 
-    grid-template-columns:
-        180px
-        145px
-        160px
-        105px
-        252px;
+    grid-template-columns: 145px 145px 165px 145px 222px;
 
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
@@ -1526,7 +1521,7 @@ body {
 .goods-area {
     top: 247px;
     height: 210px;
-    grid-template-columns: 48px 360px 88px 70px 85px 191px;
+    grid-template-columns: 70px 360px 88px 70px 85px 191px;
 }
 
 .goods-heading {
